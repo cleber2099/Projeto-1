@@ -1,0 +1,22 @@
+<%- include ('partials/header.ejs') %> 
+<%- include ('partials/navbar.ejs') %> 
+
+<body>
+    <div class="container">
+            <h1>Tarefas</h1>
+            <form  action="/salvar" method="POST">
+                <textarea class="form-control"  name="descricao" id="" cols="10" rows="2"></textarea>
+                <button class="btn btn-primary">Adicionar</button>
+            </form>
+       
+
+    <hr>
+    <div class="row">
+            <div class="col col-12"> 
+                    <a style="float: right;" href="/articles/page/2">Next >> </a><hr>
+            </div>
+    </div>
+    <hr>
+    </div>
+</body>
+<%- include ('partials/footer.ejs') %> 
