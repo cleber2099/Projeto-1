@@ -4,9 +4,10 @@ const bodyParser = require("body-parser");
 const connection = require("./database/database");
 const Tarefa = require("./tarefas/tarefa");
 const tarefaController = require('./tarefas/tarefaController');
-
+const router = express.Router();
 
 //rotas
+app.use(router);
 app.use("/",tarefaController);
 
 //databsae
@@ -20,8 +21,7 @@ app.set('view engine','ejs');
 //static
 app.use(express.static('public'));
 //body-parser
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.json());
 
 
 app.get("/", (req,res)=>{

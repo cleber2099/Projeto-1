@@ -7,5 +7,5 @@ const Tarefa = connection.define('tarefas',{
         allowNull: false
     }
 });
-Tarefa.sync({force: true});
+//Tarefa.sync({force: true});
 module.exports = Tarefa;
