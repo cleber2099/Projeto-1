@@ -6,9 +6,6 @@ const Tarefa = require("./tarefas/tarefa");
 const tarefaController = require('./tarefas/tarefaController');
 const router = express.Router();
 
-//rotas
-app.use(router);
-app.use("/",tarefaController);
 
 //databsae
 connection.authenticate().then(()=>{
@@ -23,6 +20,10 @@ app.use(express.static('public'));
 //body-parser
 app.use(express.json());
 
+
+//rotas
+app.use(router);
+app.use("/",tarefaController);
 
 app.get("/", (req,res)=>{
  res.render("index");
