@@ -1,7 +1,4 @@
-const Sequelize = require('sequelize');
-const connection = new Sequelize('tarefa','root','2099',{
-    host: 'localhost',
-    dialect: 'mysql',
-    timezone: "-03:00"
-});
-module.exports = connection;
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+module.exports.db = prisma;
