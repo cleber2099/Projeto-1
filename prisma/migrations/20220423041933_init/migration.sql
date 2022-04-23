@@ -1,0 +1,6 @@
+-- CreateTable
+CREATE TABLE "Tarefa" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "descricao" TEXT NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,65 +1,77 @@
-<%- include ('partials/header.ejs') %> 
-<%- include ('partials/navbar.ejs') %> 
+<%- include ('partials/header.ejs') %>
+    <%- include ('partials/navbar.ejs') %>
 
-<body>
-    <div class="container">
-            <h1>Tarefas</h1>
-            <form class="form-control" action="/salvar" method="POST" onsubmit="campovazio(event,this)">
-                <textarea class="form-control"  name="descricao" id="" cols="10" rows="2"></textarea>
-                <button  type="submit" class="btn btn-primary">Adicionar</button>
-            </form>
-       
+        <body>
+            <div class="container">
+                <h1>Tarefas</h1>
+                <form class="form-control" action="/tarefas/salvar" method="POST" onsubmit="campovazio(event,this)">
+                    <textarea class="form-control" name="descricao" cols="10" rows="2"></textarea>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
 
-    <hr>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Tarefas</th>
-                <th>Ações</th>
-            
-            </tr>
-        </thead>
-        <tbody>
-           <% tarefas.forEach(tarefa => { %>
-               <tr>
-                   <th><%=  tarefa.descricao %></th>
-                   <th>
-                       <a href="/edit/<%= tarefa.id%>" class=" btn btn-warning"> Editar</a>
-                       <form action="/deletar" method="POST" style="display: inline;" onsubmit="confirmarDelecao(event,this)">
-                           <input type="hidden" name="id" value="<%= tarefa.id %> ">
-                           <button class=" btn btn-danger">Deletar </button>
-                       </form>
-                       
-                   </th>
-              </tr>
-           <% }) %> 
-        </tbody>
-        </table>
-    </div>
-    <hr>
-    </div>
-    <div class="row">
-        <div class="col col-12"> 
-                <a style="float: right;" href="/page/<%= result.page + 1 %>">Next >> </a><hr>
-        </div>
-</body>
-<script>
-    function campovazio(event,form){
-        if(form.descricao.value == ""){
-            event.preventDefault();
-            alert("Preencha o campo");
-        }
-    }
+                <hr>
 
-    function confirmarDelecao(event,form){
-     event.preventDefault();
-     var decision = confirm("Deseja realmente Deletar esta tarefa?");
-     if (decision) {
-         form.submit();
-     } else {
-         
-     }
-    };
-    </script>
-<%- include ('partials/footer.ejs') %> 
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tarefas</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <% data.tarefas.forEach(tarefa=> { %>
+                            <tr id="<%=tarefa.id%>">
+                                <th>
+                                    <%= tarefa.descricao %>
+                                </th>
+                                <th>
+                                    <a href="/edit/<%=tarefa.id%>" class=" btn btn-warning">
+                                        Editar
+                                    </a>
+
+                                    <button type="button" onclick="confirmarDelecao('<%=tarefa.id%>')"
+                                        class="btn btn-danger">Deletar</button>
+
+                                </th>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr />
+            </div>
+            <div class="row">
+                <div class="col col-12">
+                    <% if(data.count/5 -1> data.page){ %>
+                        <a style="float: right;" href="?page=<%- data.page + 1 %>">Next >> </a>
+                        <hr />
+                        <% } %>
+                </div>
+        </body>
+        <script>
+            function campovazio(event, form) {
+                event.preventDefault();
+                if (form.descricao.value == "") {
+                    alert("Preencha o campo");
+                    return;
+                }
+                form.submit()
+            }
+
+            async function confirmarDelecao(id) {
+                const decision = confirm("Deseja realmente Deletar esta tarefa?");
+
+                if (!decision) return;
+
+                await fetch(`/tarefas/${id}`, { method: 'delete' }).then(res => res.text()).then(htmlStr => {
+                    document.open();
+                    document.write(htmlStr);
+                    document.close();
+                })
+            };
+
+        </script>
+        <%- include ('partials/footer.ejs') %>
