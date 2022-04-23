@@ -1,0 +1,24 @@
+<%- include ('partials/header.ejs') %> 
+<%- include ('partials/navbar.ejs') %> 
+
+<body>
+    <div class="container">
+        <% result.tarefas.rows.forEach(tarefa =>{) %> 
+            <div class="row">
+                <div class="col col-12"> 
+                 <% if(result.page > 2) {%> 
+                 <a style="float: left;" href="/page/<%= result.page -1 %> ">Prev << </a>
+                 <%} else if(result.page == 2) {%>
+                <a style="float: left;" href="/">Prev << </a>
+                  <%   } %>
+        
+                <% if(result.next){ %> 
+               <a style="float: right;" href="/page/<%= result.page + 1 %> ">Next >> </a>
+                <% } %> 
+                        </div>
+                </div>
+                <hr>
+                </div>
+</body>
+
+<%- include ('partials/footer.ejs') %> 

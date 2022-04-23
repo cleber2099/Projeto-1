@@ -19,6 +19,9 @@ app.set('view engine','ejs');
 app.use(express.static('public'));
 //body-parser
 app.use(express.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 
 //rotas
@@ -26,9 +29,12 @@ app.use(router);
 app.use("/",tarefaController);
 
 app.get("/", (req,res)=>{
- res.render("index");
+    Tarefa.findAll().then((tarefas)=>{
+        res.render("index",{tarefas: tarefas});
+    });
+});
     
-})
+
 
 app.listen(8080,()=>{
     console.log("Servidor rodando na 8080")
